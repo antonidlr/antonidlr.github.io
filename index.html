@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIFos Antonio de los Rios</title>
+    <link rel="stylesheet" href="/scss/application.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="theme_day">
+    <header id="main_header" class="clearfix">
+        <div class="main_title">
+            <p>¡Bienvenidos/as a Guifos.com! ------Donde los gifs están.//////Número de visitas: 12.765.803</p>
+        </div>
+        
+        <div id="main_navigation" class="clearfix">
+            
+            <div class="logo-homepage">
+                <a href="/index.html" class="logo"> <img id="logo" src="/assets/gifOF_logo.png" alt="guifos"> </a>
+            </div>
+            
+            <nav class="navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><button class="rectangle-1 line-dotted" onclick="window.location.href='../html/crear_gifos.html';">Crear Guifos</button></li>
+                    <li class="nav-item has-dropdown">
+                        <button id="rect-2" class="rectangle-2">Elegir Tema</button>
+                        <button id="rect-3" class="rectangle-3"><img src="/assets/dropdown.svg" alt="" height="6" width="10"> </button>
+                        <ul class="dropdown">
+                            <li class="nav-item"><button class="button-1 theme-1"><span>S</span>ailor Day</button></li>
+                            <li class="nav-item"><button class="button-1 theme-2"><span>S</span>ailor Night</button></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="#" id="link-gifo" class="rectangle-4"><span>M</span>is Guifos</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+    
+    <div id="main-wrapper" class="wrapper">
+        <div class="main_search">
+            <div class="search_title">
+                <p>Buscar</p>
+            </div>
+
+            <div class="search_bar">
+                <ul class="search-nav">
+                    <li class="has-dropdown-search">
+                        <input type="text" class="main_bar" placeholder="Busca gifs, hashtags, temas, busca lo que quieras...">
+                        <ul class="dropdown-search ">
+                            <li class="nav-item-2"><button class="b-item">Resultado de búsqueda sugerido</button></li>
+                            <li class="nav-item-2"><button class="b-item">Un resultado similar de búsqueda</button></li>
+                            <li class="nav-item-2"><button class="b-item">Y otro más</button></li>
+                        </ul>
+                    </li>
+                    <li><button class="button_search"> <img id="search_logo" src="/assets/lupa_inactive.svg" alt="" width="16" height="16">   Buscar</button></li>
+                </ul>
+            </div>
+            
+        </div>
+      
+        <div class="hashtag-container"></div>
+        
+        <div class="bar-2">
+            <p>Hoy te sugerimos:</p>
+        </div>
+        
+        <div class="gif-section">
+            <div class="gif-container">
+                <div class="fixed-gif">
+                    <div class="title-gif">
+                        <p class="tag-1">#</p>
+                        <img class="close-gif" src="/assets/close.svg" alt="" width="16" height="14">   
+                    </div>
+                    <div class="js-gif gif-1"></div>
+                    <button class="see-more butt-1" value="" >Ver más...</button>
+                </div>
+            </div>
+
+            <div class="gif-container">
+                <div class="fixed-gif">
+                    <div class="title-gif">
+                        <p class="tag-2">#</p>
+                        <img class="close-gif" src="/assets/close.svg" alt="" width="16" height="14">   
+                    </div>
+                    <div class="js-gif gif-2">
+    
+                    </div>
+                    <button class="see-more butt-2">Ver más...</button>
+                </div>
+            </div>
+
+            <div class="gif-container">
+                <div class="fixed-gif">
+                    <div class="title-gif">
+                        <p class="tag-3">#</p>
+                        <img class="close-gif" src="/assets/close.svg" alt="" width="16" height="14">   
+                    </div>
+                    <div class="js-gif gif-3">
+    
+                    </div>
+                    <button class="see-more butt-3">Ver más...</button>
+                </div>
+            </div>
+
+            <div class="gif-container">
+                <div class="fixed-gif">
+                    <div class="title-gif">
+                        <p class="tag-4">#</p>
+                        <img class="close-gif" src="/assets/close.svg" alt="" width="16" height="14">   
+                    </div>
+                    <div class="js-gif gif-4">
+    
+                    </div>
+                    <button class="see-more butt-4">Ver más...</button>
+                </div>
+            </div>
+            
+        </div>
+       
+        <div id="searchshow" class="bar-2 bar-3">
+            <p>Tendencias:</p>
+        </div>
+
+        <div class="js-container search-gif">
+           
+        </div>
+    
+        <!-- <img class="img-tag" src="https://media3.giphy.com/media/S3sllXdTDpP2kxvWYb/200.gif?cid=6ff2cb65e9289994565fa08aca12338e9f2b1f64261902ba&rid=200.gif" alt="homeland"> -->
+    </div>
+    
+    <script defer src="/javascript/main.js"></script>
+    <script defer src="/javascript/theme.js"></script>
+    <script defer src="/javascript/mis_gifos.js"></script>
+</body>
+</html>
