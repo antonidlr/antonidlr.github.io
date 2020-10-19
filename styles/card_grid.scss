@@ -1,0 +1,226 @@
+@import 'variables';
+
+//5. Section Active Main Search 
+
+.container_bar {
+    
+    margin-top: 0px;
+    margin-bottom: 0px; 
+}
+
+.active-search {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+
+    hr {
+        width: 338px;
+    }
+}
+
+.line-div {
+
+    opacity: 0.5;
+    border: 1px solid #9CAFC3;
+    margin: 0;
+}
+
+.lin-1 {
+    width: 505px;
+    margin-bottom: 14px;
+}
+
+.lin-2 {
+    margin-bottom: 80px;
+    margin-top: 55px;
+}
+
+.search-box-input {
+    width: 551px;
+    height: auto;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $white;
+    border: 1px solid $border;
+    border-radius: 27px;
+    margin-bottom: 55px;
+    padding-bottom: 8px;
+
+    hr {
+        width: 505px;
+    }
+    
+}
+
+.box-div-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 19px;
+    width: 100%;
+
+    input {
+        border: none;
+    }
+}
+
+.close-button {
+    display: none;
+    width: 24px;
+    height: 24px;
+    //display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 18px;
+    background-color: var(--white);
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    border: none;
+}
+
+.first-search-1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0px 10px 0px;
+}
+
+.icon-s1 {
+    margin-left: 20px;
+    width: 19px;
+    height: 19px;
+    padding: 2px;
+    background-color: var(--white);
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    img {
+        width: 100%;
+        display: block;
+        object-fit: contain;
+    }
+    
+
+}
+
+.suggestions-1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0px 0px 10px 0px;
+
+    .button-sug-1 {
+        color: $b-active;
+        border: none;
+        background-color: var(--white);
+        transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+    }
+}
+
+.button-search-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    
+    
+}
+
+.icon-s3 {
+    display: none;
+    margin-left: 19px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--white);
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+}
+
+#searchbar {
+    margin-left: 54px;
+}
+
+.inputfield {
+    margin-left: 33px;
+}
+
+
+::placeholder {
+    color: $b-active;
+}
+
+.icon-s2 {
+    width: 19px;
+    height: 19px;
+    margin-left: 24px;
+}
+
+.active-title {
+    display: none;
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--border);
+    text-align: center;
+    line-height: 30px;
+    margin-bottom: 61px;
+}
+
+
+// GIF CARD Trendind - size 357, 275 / margin 139, 18
+// GIF CARD Search - size 260, 200 / margin 90, 12
+
+.container-search {
+    // margin-left: 156px;
+    // margin-right: 156px;
+    padding-left: 156px;
+    padding-right: 156px;
+    padding-bottom: 78px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 28px;
+    
+    .gif-pic:hover {
+        .title-card {
+            margin-top: 100px;
+            margin-left: 12px;
+            h3 {
+                margin-top: 5px;
+            }
+        }
+    }
+   
+
+    .second-gif {
+        
+        height: 200px;
+    
+    }
+
+    .gif-card {
+        width: 260px;
+        height: 200px;
+    }
+
+    .hover-gif {
+       
+        top: -200px;
+    }
+}
+
+.b-see-more {
+    display: none;
+    margin-bottom: 79px;
+    border: 1px solid #572EE5;
+    border-radius: 25px;
+    background: $white;
+    width: 127px;
+    height: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    color: $border;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+}

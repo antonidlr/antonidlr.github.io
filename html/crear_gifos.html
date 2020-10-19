@@ -1,178 +1,141 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GIFos Antonio de los Rios</title>
-    <link rel="stylesheet" href="/scss/application.css">
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,700;1,400&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main_style.css">
+    <link rel="stylesheet" href="/styles/recorder.css">
+    <script src="https://kit.fontawesome.com/f896a62699.js" crossorigin="anonymous"></script>
+    
+    <title>Gifos Antonidlr</title>
 </head>
-<body class="theme_day">
-    <header id="main_header" class="clearfix">
-        <div class="main_title">
-            <p>¡Bienvenidos/as a Guifos.com! ------Donde los gifs están.//////Número de visitas: 12.765.803</p>
-        </div>
-        
-        <div id="main_navigation" class="clearfix">
-            
-            <div class="logo-homepage">
-                <a href="/index.html" class="arrow"> <img src="/assets/arrow.svg" alt="arrow gifos"> </a> <a href="#" class="logo"> <img id="logo" src="/assets/gifOF_logo.png" alt="guifos"> </a>
+<body class="theme-day">
+    <header>
+        <div class="logo space">
+            <div>
+                <a href="/index.html"><img src="/assets/logo-desktop-modo-noc.svg" alt="logo gifos"><h3>GIFOS</h3></a>
             </div>
             
         </div>
-    </header>
-    <a href="#" class="theme-1 link1"></a>
-    <a href="#" class="theme-2 link1"></a>
-
-    <div class="wrapper wrapper-2">
-        
-        <div id="creategif" class=" main_search">
-            <div class="search_title">
-                <p>Crear Gifos</p>
-            </div>
-            <div class="createcontent">
-                <img src="/assets/window_img.png" alt="window">
-                <div class="cont-1">
-                    <h2>Aquí podrás crear tus propios guifos</h2>
-                    <p>Crear tu <span class="gif-2">guifo</span> es muy fácil, graba cualquier imagen con tu cámara y obtén guifos <br> personalizados. Los pasos para crear tu guifo son: <br><br></p>
+        <nav class="space">
+            <div class="nav-width">
+                <div id="menuToggle">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul id="menu">
+                        <div class="list-menu">
+                            <li><button class="theme-button">Modo Nocturno</button></li>
+                            <hr>
+                        </div>
                         
-                        <ul>
-                            <li><span>1)</span> Dar permisos de acceso a la cámara (sólo por tiempo de uso) <br></li>
-                            <li><span>2)</span> Capturar tu momento guifo <br></li>
-                            <li><span>3)</span> Revisar el momento <br></li>
-                            <li><span>4)</span>Listo para subir y compartir <br></li>
-                            <li>¿Quieres comenzar a crear tu <span class="gif-2">guifo</span> ahora?</li> 
-                        </ul>
+                        <div class="list-menu">
+                            <li><a href="/html/favoritos.html">Favoritos</a></li>
+                            <hr>
+                        </div>
+                        
+                        <div class="list-menu">
+                            <li> <a href="/html/mis_gifos.html">Mis GIFOS</a> </li>
+                            <hr>
+                        </div>
+                        
+                        <div class="list-menu">
+                            <li><button class="crear-gif" onclick="window.location.href='/html/crear_gifos.html'"><img src="/assets/button-crear-gifo.svg" alt="crear-gifo"></button></li>
+                        </div>
+                        
+                    </ul>
                 </div>
             </div>
-                <div class="createbutton">
-                    <button id="cancel" class="rectangle-1 bcancel">Cancelar</button>
-                    <button id="startcamera" class="rectangle-1">Comenzar</button>
-                </div>
-        </div>
-            
-            <div id="capturar" class="main_search creategif2">
-                <div class="search_title win1">
-                    <p id="title">Un Chequeo Antes de Empezar</p>
-                    <a href="/html/crear_gifos.html"><img src="/assets/button3.svg" alt="close"></a>
-                </div>
-                
-                <div id="vid" class="vid1">
-                    <video id="record"></video>
-                    
-                </div>
-                
-                <div class="container">
-                    <div class="createbutton2">
-                        <button class="rectangle-1 bcancel2"> <img src="/assets/camera.svg" alt=""> </button>
-                        <button id="startrecording" class="rectangle-1">Capturar</button>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div id="stopVideo" class="main_search creategif2">
-                <div class="search_title win1">
-                    <p>Capturando tu Guifo</p>
-                    <a href="/html/crear_gifos.html"><img src="/assets/button3.svg" alt="close"></a>
-                </div>
-                
-                <div class="vid1">
-                    <img src="#" id="preview" alt="gifpreview">
-                </div>
-                
-                <input class="recording2" type="text" value="">
-                <div class="createbutton2">
-                    <button class="rectangle-1 bcancel2"><img class="recording" src="/assets/recording_dark.svg" alt="recording"> </button>
-                    <!-- <button id="stoprecord" class="rectangle-1">Listo</button> -->
-                </div>
-                
-            </div>
-            
-            <div id="preview-video" class="main_search creategif2">
-                <div class="search_title win1">
-                    <p>Vista Previa</p>
-                    <a href="/html/crear_gifos.html"><img src="/assets/button3.svg" alt="close"></a>
-                </div>
-                
-                
-                <div id="vid2" class="vid1">
-                    <video id="record2" width="838" height="434"></video>
-                </div>
-
-                
-                
-                <div class="win2">
-                    
-                    <div class="bar_play">
-                        <input class="recording2" type="text" value = "00:00:00:00">
-                        <button id = "forw" class="forward"><img src="/assets/forward.svg" alt="forward"></button>
-                        <div class="forward_bar"></div>
-                    </div>
-                    
-                    <div class="createbutton3">
-                        <button id ="repeat" class="rectangle-1 bcancel">Repetir Captura</button>
-                        <button id="upload-gif" class="rectangle-1">Subir Guifo</button>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <div id="addGifo" class="main_search creategif2">
-                <div class="search_title win1">
-                    <p>Subiendo Guifo</p>
-                    <a href="/html/crear_gifos.html"><img src="/assets/button3.svg" alt="close"></a>
-                </div>
-                
-                <div id="vid4" class="vid1 vid_content">
-                    <img src="/assets/globe_img.png" alt="globe">
-                    <p class="row">Estamos subiendo tu guifo...</p>
-                    <div class="forward_bar2"></div>
-                    <p class="row1">Tiempo restante: <span>39 años</span> algunos minutos</p>
-                </div>
-                
-                <div class="createbutton4">
-                    <button id="cancel-upload" class="rectangle-1 cr2">Cancelar</button>
-                </div>
-                
-            </div>
-
-            <div id="lastwindow" class="main_search creategif3">
-                <div class="search_title win1">
-                    <p>Guifo Subido Con Éxito</p>
-                    <a href="/html/crear_gifos.html"><img src="/assets/button3.svg" alt="close"></a>
-                </div>
-                <div class="subcontainer">
-                    <div id="vid3">
-                        <img src="#" id="gifview" alt="gifpreview" width="365" height="191">
-                    </div>
-                    
-                    <div class="cbutton3">
-                        <p>Guifo creado con éxito</p>
-                        <button class="copy">Copiar Enlace Guifo</button>
-                        <button class="copy">Descargar Guifo</button>
-                    </div>
-                    
-                </div>
-                <input type="text" id="gifourl" >
-                <button id="showgifos" class="rectangle-1">Listo</button>
-            </div>
-
-         
-            
-            <div id= "bar-guifos">
-                <div  class="bar-2">
-                    <p>Mis guifos</p>
-                </div>
-                <div id="mis-guifos" class="search-gif2"></div>
-            </div>
-           
+        </nav>
+    </header>
+    <main>
+    <div class="main-container">
+        <div class="camera-image">
+            <img class="camera" src="/assets/camara.svg" alt="camera">
+            <img class="camera-light" src="/assets/element-luz-camara.svg" alt="luz-camara">
         </div>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.9/RecordRTC.js"></script>
-        <script defer src="/javascript/recording.js"></script>
-        <script defer src="/javascript/theme.js"></script>
-        
+        <div class="video-recorder">
+            <div class="box-video">
+                <div class="sm-box-1 sm-top">
+                    <div class="box-border top-b left-b"></div>
+                    <div class="box-border top-b right-b"></div>
+                </div>
+                <div class="main-video">
+                    <h2 class="main-title-1">Aquí podrás <br> crear tus propios <span>GIFOS</span></h2>
+                    <p class="main-text-1">¡Crea tu GIFO en sólo 3 pasos! <br> (sólo necesitas una cámara para grabar un video)</p>
+                    
+                    <div class="step-one upload">
+                        <div class="back-color">
+                        </div>
+                        <div class="container-text">
+                            <div class="up-container loading"></div>
+                            <p>Estamos subiendo tu GIFO</p>
+                        </div>
+                        
+                    </div>
 
-    </body>
-    </html>
+                    <div class="step-two upload">
+                        <div class="back-color">
+                        </div>
+                        <div class="container-button">
+                            <button class="u-icon left-icon"><img src="/assets/icon-download.svg" alt="icon fav"></button>
+                            <button class="u-icon"><img src="/assets/icon-link.svg" alt="icon fav"></button>
+                        </div>
+                        <div class="container-text">
+                            <div class="up-container upload-ok"></div>
+                            <p>GIFO subido con éxito</p>
+                        </div>
+                       
+                    </div>
+
+                </div>
+                
+                <div class="sm-box-1 sm-bottom">
+                    <div class="box-border bottom-b left-b"></div>
+                    <div class="box-border bottom-b right-b"></div>
+                </div>
+                
+            </div>
+            <div class="video-chapter">
+                <div class="chapter">
+                    <div class="chapter-icon"><h2>1</h2></div>
+                    <div class="chapter-icon"><h2>2</h2></div>
+                    <div class="chapter-icon"><h2>3</h2></div>
+                    <p>00:00:00</p>
+                    <button class="chapter-repeat">REPETIR CAPTURA</button>
+                </div>
+                <hr>
+                <button class="start-video">COMENZAR</button>
+            </div>
+        </div>
+
+        <div class="camera-image-2">
+            <img class="movie" src="/assets/pelicula.svg" alt="pelicula">
+        </div>
+        
+    </div>
+    </main>
+
+    <footer>
+
+        <p class="first-foo">Compartir en:</p>
+
+        <div>
+            <a href="https://www.facebook.com/antonio.delosrios.923" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com/toniodlrios" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/antonidlr/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/antonidlr" target="_blank"><i class="fab fa-github-alt"></i></a>
+        </div>
+        
+        <p class="second-foo">	&copy; GIFOS 2020 All Rights Reserved.</p>
+    </footer>
+
+    <script defer src="javascript/theme_crear_gifos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.6/RecordRTC.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" ></script>
+    <script defer src="/javascript/crear_gifo.js"></script>
+</body>
+</html>

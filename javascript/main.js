@@ -1,752 +1,825 @@
-// 1. Tomar el valor de entrada
+//1. Tomar el valor de busqueda para GIFOS
 
-document.querySelector(".button_search").addEventListener('click',function(){
-    const userInput = getUserInput();
-    const val = true;
-    const val2 = true;
-    searchGiphy( url, userInput, val, val2);
-    searchBar();
-});
+let mainSearch = document.getElementById('searchbar');
+let bSearch = document.getElementById('search__1');
+const inputTitle = document.getElementsByClassName('active-title');
+const btnSeeMore = document.querySelector('.b-see-more');
+const searchAgain = document.querySelector('.search-again');
+const textTrending = document.querySelector('.trending');
 
-document.querySelector(".main_bar").addEventListener('keyup',function(e){
-    //Cuando se use la tecla enter en la barra de busqueda...
-    if(e.which === 13) {
-        const userInput = getUserInput();
-        const val = true;
-        const val2 = true;
-        searchGiphy( url, userInput, val, val2);
-        searchBar();
+const gifsTrend = []; //Array para Trending Carrusel
+const trendingSection = document.querySelector('.trending-gall');
+
+const activeSection = document.querySelector('.active-search');
+const barSuggestions = document.querySelector('.search-box-input');
+const closeInput = document.querySelector('.close-button');
+const inputSection = document.querySelector('.inputbar');
+const trendingText = document.querySelector('.trending');
+const lineDiv = document.querySelector('.lin-2');
+const titleGifs = document.getElementsByClassName('active-title');
+
+const globalDiv = document.querySelector('.container-max');
+const subDiv = document.querySelector('.container-submax');
+
+//Suggestions
+const btnSuggestion = document.getElementsByClassName('button-search-2');
+const iconSearch = document.querySelector('.icon-s3');
+const btnText = document.getElementsByClassName('button-sug-1');
+const contSuggestion = document.querySelector('.container_sugg');
+const contBar = document.querySelector('.activebar');
+const containerBar = document.querySelector('.container_bar');
+let igif = 1;
+
+
+//Array Favoritos
+let favsArray = [];
+
+let inputGifArray = [];
+let inputGifArrayNodes = [];
+let trendingGifArray = [];
+
+// container_sugg
+//close-button
+//icon-s3
+
+mainSearch.addEventListener('input', () => {
+    
+    if(mainSearch.value.length > 2) {
+        bSearch.style.display = 'none';
+        
+        iconSearch.style.display = 'block';
+        closeInput.style.display = 'flex';
+        contSuggestion.style.display = 'flex';
+        mainSearch.style.marginLeft = '11px';
+        contBar.style.height = '200px';
+        containerBar.classList.add('center-item');
+        getSuggestions();
+        
     }
-});
+    
+})
+///////////////////////////////////////////////////////////////////////
+const btnsSearch = document.querySelectorAll('.suggestions-1');
+
+btnsSearch.forEach((item)=> {
+    item.addEventListener('click', event => {
+        const textSugg = item.querySelector('.button-sug-1').innerText;
+        displayScreen(textSugg);
+    })
+})
+
+function closeSuggestions () {
+    
+    bSearch.style.display = 'block';
+    
+    iconSearch.style.display = 'none';
+    closeInput.style.display = 'none';
+    contSuggestion.style.display = 'none';
+    mainSearch.style.marginLeft = '54px';
+    contBar.style.height = '50px';
+    mainSearch.value = "";
+}
+
+closeInput.addEventListener('click', () => {
+    containerBar.classList.remove('center-item');
+    closeSuggestions();
+})
+
+// Get User Input Data GIFO
 
 function getUserInput () {
-    const inputValue = document.querySelector('.main_bar').value;
+    const inputValue = mainSearch.value;
     return inputValue;
 };
 
-// Gifs sugeridos
+// Searching GIF on Click
 
-const myArray = ["thinking", "Simpsons Join Us", "Starwars", "Dog"];
-
-// 2. Hacer el trabajo con la API
-
-const apiKey = 'E8tQ2I3AwBANKnR29Xh48X3QDStottuJ';
-const urlApi = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=`
-const urlTrending = `https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}&limit=25&rating=G`
-const url = urlApi;
-
-
-async function fetchAsync ( url, input) {
-    //await response of fetch call
-    const response = await fetch(url + input);
-    // only proceed once promise is resolved
-    const data = await response.json();
-    // only proceed once second promise is resolved
-   return data;
-};
-
-// 3. Mostrar en pantalla
-
-// Busqueda principal 
-
-function searchGiphy( url , input, val, val2) {
-    fetchAsync(url,input)
-    .then(function(data) {
-        const resp = data.data;
-        
-        dataArray(resp);
-
-        if(val2){
-            chashtag(resp);
-        }
-    })
-    setTimeout(function(){ 
-        if (val) {
-            moveScreen();
-        } }, 1500);
-}
-
-function searchGiphy2( url , input, num) {
-    fetchAsync(url,input)
-    .then(function(data) {
-        const resp = data.data;
-        trendingArray(resp, num);
-        
-    })
-}
-
-//4. Trending y demás
-//Muestra despues de una busqueda los Gif asociados
-const dataArray = (resp) => {
-    const contDiv = document.querySelector(".js-container");
-    contDiv.innerHTML = "";
-    let num = 0;
-    resp.forEach(function(data){
-        const imageUrl = data.images.original.url;
-        const str = resp[num].slug;
-        const newStr2 =str.split("-");
-        contDiv.appendChild(containerGifo(imageUrl,newStr2[0],newStr2[1]))
-        //contDiv.innerHTML += containerGifo(imageUrl,newStr2[0],newStr2[1]);
-        //"<div class=img-box><div class=img-main><img class=img-box2 src='"+ imageUrl +"' /><div class=box-bar><p>#"+newStr2[0] +" #"+newStr2[1] +"</p></div></div></div>";
-        num++;
-    })
-    const div1 = document.querySelectorAll('.box-1');
-    const div2 = document.querySelectorAll('.box-2');
-    const div3 = document.querySelectorAll('.box-3');
-    const img1 = document.querySelectorAll('.img-box2');
-
-    console.log(img1[0]);
-    console.log(div3[0]);
-
-    img1[0].addEventListener('mouseover', () => {
-        div1[0].classList.add('img-box');
-        div3[0].classList.add('img-main');
-        div2[0].style.display = "flex";
-    });
-
-    img1[0].addEventListener('mouseout', () => {
-        div1[0].classList.remove('img-box');
-        div3[0].classList.remove('img-main');
-        div2[0].style.display = "none";
-    });
-
-    img1[1].addEventListener('mouseover', () => {
-        div1[1].classList.add('img-box');
-        div3[1].classList.add('img-main');
-        div2[1].style.display = "flex";
-    });
-
-    img1[1].addEventListener('mouseout', () => {
-        div1[1].classList.remove('img-box');
-        div3[1].classList.remove('img-main');
-        div2[1].style.display = "none";
-    });
+iconSearch.addEventListener('click', () => {
     
-    img1[2].addEventListener('mouseover', () => {
-        div1[2].classList.add('img-box');
-        div3[2].classList.add('img-main');
-        div2[2].style.display = "flex";
-    });
+    displayScreen(getUserInput());
+    
+});
 
-    img1[2].addEventListener('mouseout', () => {
-        div1[2].classList.remove('img-box');
-        div3[2].classList.remove('img-main');
-        div2[2].style.display = "none";
-    });
+// Searchin GIF on ENTER
 
-    img1[3].addEventListener('mouseover', () => {
-        div1[3].classList.add('img-box');
-        div3[3].classList.add('img-main');
-        div2[3].style.display = "flex";
-    });
+mainSearch.addEventListener('keyup', (e) => {
+    
+    if(e.which === 13) {
+        
+        displayScreen(getUserInput());
+        
+    }
+});
 
-    img1[3].addEventListener('mouseout', () => {
-        div1[3].classList.remove('img-box');
-        div3[3].classList.remove('img-main');
-        div2[3].style.display = "none";
-    });
 
-    img1[4].addEventListener('mouseover', () => {
-        div1[4].classList.add('img-box');
-        div3[4].classList.add('img-main');
-        div2[4].style.display = "flex";
-    });
+function displayScreen (param) {
+    inputGifArray = [];
+    activeSection.style.display = 'flex';
+    searchGif(urlApi, param);
+    inputTitle[0].innerText = param;
+    hideMainbar();
+    showBarSuggestions();
+    igif = 1;
+}
 
-    img1[4].addEventListener('mouseout', () => {
-        div1[4].classList.remove('img-box');
-        div3[4].classList.remove('img-main');
-        div2[4].style.display = "none";
-    });
+//2. API from Giphy
 
-    img1[5].addEventListener('mouseover', () => {
-        div1[5].classList.add('img-box');
-        div3[5].classList.add('img-main');
-        div2[5].style.display = "flex";
-    });
+const apiKey = '3IXsNj5VZwIO7aLYIaWASyWQyLliVJk4';
+const afterKey = `?api_key=${apiKey}`;
+const urlApi = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=`;
+const urlTrending = `https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}&limit=25&rating=G`;
+const urlSuggestions = `https://api.giphy.com/v1/tags/related/`;
 
-    img1[5].addEventListener('mouseout', () => {
-        div1[5].classList.remove('img-box');
-        div3[5].classList.remove('img-main');
-        div2[5].style.display = "none";
-    });
 
-    img1[6].addEventListener('mouseover', () => {
-        div1[6].classList.add('img-box');
-        div3[6].classList.add('img-main');
-        div2[6].style.display = "flex";
-    });
+// Suggestions from API
 
-    img1[6].addEventListener('mouseout', () => {
-        div1[6].classList.remove('img-box');
-        div3[6].classList.remove('img-main');
-        div2[6].style.display = "none";
-    });
 
-    img1[7].addEventListener('mouseover', () => {
-        div1[7].classList.add('img-box');
-        div3[7].classList.add('img-main');
-        div2[7].style.display = "flex";
-    });
 
-    img1[7].addEventListener('mouseout', () => {
-        div1[7].classList.remove('img-box');
-        div3[7].classList.remove('img-main');
-        div2[7].style.display = "none";
-    });
-
-    img1[8].addEventListener('mouseover', () => {
-        div1[8].classList.add('img-box');
-        div3[8].classList.add('img-main');
-        div2[8].style.display = "flex";
-    });
-
-    img1[8].addEventListener('mouseout', () => {
-        div1[8].classList.remove('img-box');
-        div3[8].classList.remove('img-main');
-        div2[8].style.display = "none";
-    });
-
-    img1[9].addEventListener('mouseover', () => {
-        div1[9].classList.add('img-box');
-        div3[9].classList.add('img-main');
-        div2[9].style.display = "flex";
-    });
-
-    img1[9].addEventListener('mouseout', () => {
-        div1[9].classList.remove('img-box');
-        div3[9].classList.remove('img-main');
-        div2[9].style.display = "none";
-    });
-
-    img1[10].addEventListener('mouseover', () => {
-        div1[10].classList.add('img-box');
-        div3[10].classList.add('img-main');
-        div2[10].style.display = "flex";
-    });
-
-    img1[10].addEventListener('mouseout', () => {
-        div1[10].classList.remove('img-box');
-        div3[10].classList.remove('img-main');
-        div2[10].style.display = "none";
-    });
-
-    img1[11].addEventListener('mouseover', () => {
-        div1[11].classList.add('img-box');
-        div3[11].classList.add('img-main');
-        div2[11].style.display = "flex";
-    });
-
-    img1[11].addEventListener('mouseout', () => {
-        div1[11].classList.remove('img-box');
-        div3[11].classList.remove('img-main');
-        div2[11].style.display = "none";
-    });
-
-    img1[12].addEventListener('mouseover', () => {
-        div1[12].classList.add('img-box');
-        div3[12].classList.add('img-main');
-        div2[12].style.display = "flex";
-    });
-
-    img1[12].addEventListener('mouseout', () => {
-        div1[12].classList.remove('img-box');
-        div3[12].classList.remove('img-main');
-        div2[12].style.display = "none";
-    });
-
-    img1[13].addEventListener('mouseover', () => {
-        div1[13].classList.add('img-box');
-        div3[13].classList.add('img-main');
-        div2[13].style.display = "flex";
-    });
-
-    img1[13].addEventListener('mouseout', () => {
-        div1[13].classList.remove('img-box');
-        div3[13].classList.remove('img-main');
-        div2[13].style.display = "none";
-    });
-
-    img1[14].addEventListener('mouseover', () => {
-        div1[14].classList.add('img-box');
-        div3[14].classList.add('img-main');
-        div2[14].style.display = "flex";
-    });
-
-    img1[14].addEventListener('mouseout', () => {
-        div1[14].classList.remove('img-box');
-        div3[14].classList.remove('img-main');
-        div2[14].style.display = "none";
-    });
-
-    img1[15].addEventListener('mouseover', () => {
-        div1[15].classList.add('img-box');
-        div3[15].classList.add('img-main');
-        div2[15].style.display = "flex";
-    });
-
-    img1[15].addEventListener('mouseout', () => {
-        div1[15].classList.remove('img-box');
-        div3[15].classList.remove('img-main');
-        div2[15].style.display = "none";
-    });
-
-    img1[16].addEventListener('mouseover', () => {
-        div1[16].classList.add('img-box');
-        div3[16].classList.add('img-main');
-        div2[16].style.display = "flex";
-    });
-
-    img1[16].addEventListener('mouseout', () => {
-        div1[16].classList.remove('img-box');
-        div3[16].classList.remove('img-main');
-        div2[16].style.display = "none";
-    });
-
-    img1[17].addEventListener('mouseover', () => {
-        div1[17].classList.add('img-box');
-        div3[17].classList.add('img-main');
-        div2[17].style.display = "flex";
-    });
-
-    img1[17].addEventListener('mouseout', () => {
-        div1[17].classList.remove('img-box');
-        div3[17].classList.remove('img-main');
-        div2[17].style.display = "none";
-    });
-
-    img1[18].addEventListener('mouseover', () => {
-        div1[18].classList.add('img-box');
-        div3[18].classList.add('img-main');
-        div2[18].style.display = "flex";
-    });
-
-    img1[18].addEventListener('mouseout', () => {
-        div1[18].classList.remove('img-box');
-        div3[18].classList.remove('img-main');
-        div2[18].style.display = "none";
-    });
-
-    img1[19].addEventListener('mouseover', () => {
-        div1[19].classList.add('img-box');
-        div3[19].classList.add('img-main');
-        div2[19].style.display = "flex";
-    });
-
-    img1[19].addEventListener('mouseout', () => {
-        div1[19].classList.remove('img-box');
-        div3[19].classList.remove('img-main');
-        div2[19].style.display = "none";
-    });
-
-    img1[20].addEventListener('mouseover', () => {
-        div1[20].classList.add('img-box');
-        div3[20].classList.add('img-main');
-        div2[20].style.display = "flex";
-    });
-
-    img1[20].addEventListener('mouseout', () => {
-        div1[20].classList.remove('img-box');
-        div3[20].classList.remove('img-main');
-        div2[20].style.display = "none";
-    });
-
-    img1[21].addEventListener('mouseover', () => {
-        div1[21].classList.add('img-box');
-        div3[21].classList.add('img-main');
-        div2[21].style.display = "flex";
-    });
-
-    img1[21].addEventListener('mouseout', () => {
-        div1[21].classList.remove('img-box');
-        div3[21].classList.remove('img-main');
-        div2[21].style.display = "none";
-    });
-
-    img1[22].addEventListener('mouseover', () => {
-        div1[22].classList.add('img-box');
-        div3[22].classList.add('img-main');
-        div2[22].style.display = "flex";
-    });
-
-    img1[22].addEventListener('mouseout', () => {
-        div1[22].classList.remove('img-box');
-        div3[22].classList.remove('img-main');
-        div2[22].style.display = "none";
-    });
-
-    img1[23].addEventListener('mouseover', () => {
-        div1[23].classList.add('img-box');
-        div3[23].classList.add('img-main');
-        div2[23].style.display = "flex";
-    });
-
-    img1[23].addEventListener('mouseout', () => {
-        div1[23].classList.remove('img-box');
-        div3[23].classList.remove('img-main');
-        div2[23].style.display = "none";
-    });
-
-    img1[24].addEventListener('mouseover', () => {
-        div1[24].classList.add('img-box');
-        div3[24].classList.add('img-main');
-        div2[24].style.display = "flex";
-    });
-
-    img1[24].addEventListener('mouseout', () => {
-        div1[24].classList.remove('img-box');
-        div3[24].classList.remove('img-main');
-        div2[24].style.display = "none";
-    });
-};
-
-// 4.1 Hover Gifs Hastags 
-
-const containerGifo = (img, tag1, tag2) => {
-    const div1 = document.createElement('div');
-    const div2 = document.createElement('div');
-    const div3 = document.createElement('div');
-    const img1 = document.createElement('img');
-    const p1 = document.createElement('p');
-    div1.classList.add('box-1');
-    div2.classList.add('box-3');
-    div3.classList.add('box-2', 'box-bar');
-    img1.classList.add('img-box2');
-    div1.appendChild(div2);
-    div2.appendChild(img1);
-    div2.appendChild(div3);
-    div3.appendChild(p1);
-
-    img1.src = img;
-    p1.innerHTML = "#"+tag1 +" #"+tag2 +"";
-    return div1;
+function getSuggestions () {
+    
+    if(mainSearch.value.length > 2) {
+        apiSearch(urlSuggestions + mainSearch.value + afterKey, " ")
+        .then((data) => {
+            const arraySugg = data.data;
+            for(let num=0; num < 4; num++) {
+                btnText[num].innerText = arraySugg[num].name;
+            }
+            
+        })
+    }
 }
 
 
-//5. Suggestions for searching
+async function apiSearch (url, input) {
+    
+    const resp = await fetch(url + input);
+    
+    const data = await resp.json();
+    
+    return data;
+};
 
-let buttonS = document.getElementsByClassName('b-item');
-let searchButton = document.querySelector('.button_search');
-let imgButton = document.getElementById('search_logo');
-const mainInput = document.querySelector(".main_bar");
+//3. Mostrar en pantalla
 
-mainInput.addEventListener('input', updateValueSearch);
-
-function updateValueSearch(e) {
-    if (e.target.value.length >= 2) {
-        
-        try {
-            fetchAsync(url, e.target.value)
-            .then(function(data) {
-                const resp = data.data;
-                
-                if(resp !== undefined) {
-                    linkSuggestion(resp);
-                }
-            })
-        } catch(err) {
-           console.log("error" + err);
-        }
+function searchGif(url, input) {
+    apiSearch(url, input)
+    .then((data) => {
+        const resp = data;
+        dataArrayScreen(resp.data);
+        console.log(resp.data);
+        console.log(resp.meta);
+        console.log(resp.meta.status);
        
-        searchButton.classList.add("button-2");
-        imgButton.src = "/assets/lupa.svg"
-        searchButton.classList.remove("button_search");
-    }
-
-    else {
-        searchButton.classList.add("button_search");
-        searchButton.classList.remove("button-2");
-        imgButton.src = "/assets/lupa_inactive.svg"
-    }
-}
-
-const cleanInput = () => {
-    mainInput.value = "";
-}
-
-const linkSuggestion = (resp) => {
-
-    try {
-        if(resp[0].title !== undefined) {
-            buttonS[0].innerHTML = resp[0].title;
-        }
-        if (resp[1].title !== undefined) {
-            buttonS[1].innerHTML = resp[1].title;
-        }
-        if (resp[2].title !== undefined) {
-            buttonS[2].innerHTML = resp[2].title;
-        }
-    }catch (err) {
-        console.log("Hola mi error es: " + err);
-        alert("Tu Busqueda no tiene GIFs relacionados");
-        cleanInput();
-    }
-    
-    buttonS[0].addEventListener('click', () => {
-        const userInput = buttonS[0].textContent;
-        const val = true;
-        searchGiphy( url, userInput, val );
-        const inputText = document.querySelector(".bar-3");
-        inputText.innerHTML = "<p>" + userInput + " (resultados)</p>";
-    });
-
-    buttonS[1].addEventListener('click', () => {
-        const userInput = buttonS[1].textContent;
-        const val = true;
-        searchGiphy( url, userInput, val );
-        const inputText = document.querySelector(".bar-3");
-        inputText.innerHTML = "<p>" + userInput + " (resultados)</p>";
-    });
-
-    buttonS[2].addEventListener('click', () => {
-        const userInput = buttonS[2].textContent;
-        const val = true;
-        searchGiphy( url, userInput, val );
-        const inputText = document.querySelector(".bar-3");
-        inputText.innerHTML = "<p>" + userInput + " (resultados)</p>";
-    });
-}
-
-//5.1 Buttons Suggestions Hashtags
-
-const createButtonHash = (tag) => {
-    const buttonHashtag = document.createElement('button');
-    buttonHashtag.classList.add('taggifo');
-    buttonHashtag.innerHTML = "#" + tag;
-    buttonHashtag.value = tag;
-    const hashtagContainer = document.querySelector('.hashtag-container');
-    hashtagContainer.appendChild(buttonHashtag);
-}
-
-const chashtag = (resp) => {
-    const hashtagContainer = document.querySelector('.hashtag-container');
-    hashtagContainer.innerHTML = " ";
-    for (let num=0; num<8; num++ ) {
-
-        const str = resp[num].slug;
-        console.log(str);
-        const newStr2 =str.split("-");
-        console.log(newStr2);
-        const newStr = str.split("-").shift();
-        createButtonHash(newStr);
-       
-    }
-    const buttonArray = document.getElementsByClassName('taggifo');
-
-    buttonArray[0].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[0].value, val );
-        searchBar2(buttonArray[0].value);
-        console.log("aca hola: " + buttonArray[0].value);
-    });
-
-    buttonArray[1].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[1].value, val );
-        searchBar2(buttonArray[1].value);
-        console.log("aca hola: " + buttonArray[1].value);
-    });
-    
-    buttonArray[2].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[2].value, val );
-        searchBar2(buttonArray[2].value);
-        console.log("aca hola: " + buttonArray[2].value);
-    });
-
-    buttonArray[3].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[3].value, val );
-        searchBar2(buttonArray[3].value);
-        console.log("aca hola: " + buttonArray[3].value);
-    });
-
-    buttonArray[4].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[4].value, val );
-        searchBar2(buttonArray[4].value);
-        console.log("aca hola: " + buttonArray[4].value);
-    });
-    
-    buttonArray[5].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[5].value, val );
-        searchBar2(buttonArray[5].value);
-        console.log("aca hola: " + buttonArray[5].value);
-    });
-
-    buttonArray[6].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[6].value, val );
-        searchBar2(buttonArray[6].value);
-        console.log("aca hola: " + buttonArray[6].value);
-    });
-
-    buttonArray[7].addEventListener('click', () => {
-        const val = true;
-        searchGiphy( url, buttonArray[7].value, val );
-        searchBar2(buttonArray[7].value);
-        console.log("aca hola: " + buttonArray[7].value);
-    });
-}
-
-
-
-
-// 6. Line Around Div Ver Mas on Mouse Over
-
-let divSeeMore = document.getElementsByClassName('js-gif');
-let buttonSeeMore = document.getElementsByClassName('see-more');
-buttonSeeMore[0].addEventListener('mouseover', () => {
-    divSeeMore[0].classList.add("line-around");
-});
-
-buttonSeeMore[0].addEventListener("mouseout", () => {
-    divSeeMore[0].classList.remove("line-around");
-});
-
-buttonSeeMore[1].addEventListener('mouseover', () => {
-    divSeeMore[1].classList.add("line-around");
-});
-
-buttonSeeMore[1].addEventListener("mouseout", () => {
-    divSeeMore[1].classList.remove("line-around");
-});
-
-buttonSeeMore[2].addEventListener('mouseover', () => {
-    divSeeMore[2].classList.add("line-around");
-});
-
-buttonSeeMore[2].addEventListener("mouseout", () => {
-    divSeeMore[2].classList.remove("line-around");
-});
-
-buttonSeeMore[3].addEventListener('mouseover', () => {
-    divSeeMore[3].classList.add("line-around");
-});
-
-buttonSeeMore[3].addEventListener("mouseout", () => {
-    divSeeMore[3].classList.remove("line-around");
-});
-
-
-// Muestra los 4 Gif sugeridos
-const trendingArray = (resp,num) => {
-    
-        const contDiv = document.querySelector(`.gif-${num+1}`);
-        contDiv.innerHTML = "";
         
-        const imageUrl = resp[0].images.downsized_large.url;
-        contDiv.innerHTML = "<img src='"+ imageUrl +"' />";
+        if(resp.meta.status === 200){
+            if(resp.data.length == 0) {
+                btnSeeMore.style.display = 'none';
+                textTrending.style.display = 'block';
+                searchAgain.style.display = 'flex';
+            } else {
+                textTrending.style.display = 'none';
+                searchAgain.style.display = 'none';
+                const container = document.querySelector('.container-search');
+                showFirstSearch();
+                container.querySelectorAll('.gif-card').forEach(item => {  
+                    
+                    addLikeClass (item, '.like');
+                    
+                    item.querySelector('.like').addEventListener('click', event => {
+                        
+                        getLike(item, '.like');
+                        
+                    });
+                    
+                    item.getElementsByClassName('b-icon')[1].addEventListener('click', () => {
+                        let str2 = item.style.backgroundImage;
+                        let urlGifFav = str2.substring(str2.indexOf('media/')+ 6, str2.lastIndexOf('/giphy'));
+                        window.open(`https://media.giphy.com/media/${urlGifFav}/giphy.gif`);
+                        
+                    })
+                    
+                    // GIF SCREEN MAX WINDOW 
+                    item.getElementsByClassName('b-icon')[2].addEventListener('click', () => {
+                        
+                        console.log('hola from screenmax');
+                        let str2 = item.style.backgroundImage;
+                        let urlGifFav = str2.substring(str2.indexOf('media/')+ 6, str2.lastIndexOf('/giphy'));
+                        let num = 0;
+                        
+                        inputGifArray.forEach((item) => {
+                            if(urlGifFav == item.imageUrl) {
+                                getScreenMax(num, inputGifArray);
+                            }
+                            num ++;
+                        })
+                        
+                    })
+                    //num++;
+                    
+                });
 
-        const str = resp[0].title;
-        const newStr = str.split("GIF").shift();
-        const newTag = newStr.replace(/\s/g, '');
-
-        const tag = document.querySelector(`.tag-${num+1}`);
-        tag.innerHTML = "#"+newTag;
-        
-};
-// Muestra los Gif despues de click Ver mas...
-
-const setValue = (val) => {
-
+            }
+            
+        }
+    });
 }
 
-// Cargar Trending cuando se actualice el website
-
-window.addEventListener('load', (event) => {
-    for (let num=0; num<4; num++){
-        const valArray = myArray[num];
-        searchGiphy2(url, valArray, num);
-        seeMore(num, valArray);
-    }
-   
-    searchGiphy(urlTrending, "", false);
-
-});
-
-// Asignar input a barra de tendencias
-
-const searchBar = () => {
-    const input = getUserInput();
-    const inputText = document.querySelector(".bar-3");
-    inputText.innerHTML = "<p>" + input + " (resultados)</p>";
-}
-
-const searchBar2 = (input) => {
-    const inputText = document.querySelector(".bar-3");
-    inputText.innerHTML = "<p>" + input + " (resultados)</p>";
-}
-
-// Mover pantalla a sección de busqueda
-
-const moveScreen = () => {
-    document.getElementById('searchshow').scrollIntoView({
-        behavior:'smooth'
+function searchTren(url) {
+    apiSearch(url, '')
+    .then((data) => {
+        const resp = data;
+        console.log(resp.data);
+        console.log(resp.data.length);
+        arrayTrending(resp.data);
+        if (resp.meta.status == 200) {
+            createTrendCards();
+            eventBtnsGif();
+        }
     }); 
 }
 
-window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-  }
+function eventBtnsGif (){
+    const container = document.querySelector('.trending-gall');
+    
+    container.querySelectorAll('.gif-card').forEach(item => {
+        
+        addLikeClass(item, '.like-trend');
+        
+        item.querySelector('.like-trend').addEventListener('click', event => {
+            
+            getLike(item, '.like-trend');
+            
+        });
+        
+        item.getElementsByClassName('b-icon')[1].addEventListener('click', () => {
+            let str2 = item.style.backgroundImage;
+            let urlGifFav = str2.substring(str2.indexOf('media/')+ 6, str2.lastIndexOf('/giphy'));
+            window.open(`https://media.giphy.com/media/${urlGifFav}/giphy.gif`);
+            
+        })
+        
+        // GIF SCREEN MAX WINDOW 
+        item.getElementsByClassName('b-icon')[2].addEventListener('click', () => {
+            
+            let str2 = item.style.backgroundImage;
+            let urlGifFav = str2.substring(str2.indexOf('media/')+ 6, str2.lastIndexOf('/giphy'));
+            let num = 0;
+            
+            gifsTrend.forEach((item) => {
+                if(urlGifFav == item.imageid) {
+                    getScreenMax(num, gifsTrend);
+                }
+                num ++;
+            })
+            
+        })
+        
+    });
+}
 
-const seeMore = (num,val2) => {
-    let bValue = document.querySelector(`.butt-${num+1}`);
-    bValue.setAttribute("value",val2);
+//4. Manipulating de DOM with APi Data response
+
+const dataArrayScreen = (resp) => {
+    
+    const container = document.getElementsByClassName('container-search')[0];
+    container.innerHTML = "";
+    
+    //addSuggestions(resp);
+    
+    if(inputGifArrayNodes.length > 0) {
+        inputGifArrayNodes = [];
+    }
+
+    if(resp.length == 0) {
+        btnSeeMore.style.display = 'none';
+        searchAgain.style.display = 'flex';
+    } else {
+        resp.forEach(function(data){
+            let cardObject = {
+                imageUrl: data.id,
+                user: '',
+                title: '',
+                imageid: data.id,
+            };
+            const cardTest = createCard('like');
+            const imageUrl = data.images.original.url;
+            
+            cardTest.style.backgroundImage = "url('"+imageUrl+"')";
+            
+            if(data.username == "") {
+                cardTest.getElementsByTagName('p')[0].innerText = 'GIPHY';
+                cardObject.user = 'GIPHY';
+            } else {
+                cardTest.getElementsByTagName('p')[0].innerText = data.username.toUpperCase();
+                cardObject.user = data.username.toUpperCase();
+            }
+            cardTest.getElementsByTagName('h3')[0].innerText = data.title.split(' GIF')[0];
+            cardObject.title = data.title.split(' GIF')[0];
+            
+            //container.append(cardTest);
+            inputGifArray.push(cardObject);
+            inputGifArrayNodes.push(cardTest);
+            
+        })
+    }
+}
+
+function showFirstSearch () {
+   
+        const container = document.getElementsByClassName('container-search')[0];
+        btnSeeMore.style.display = 'block';
+        for(let num = 0; num < 12; num ++) {
+            container.append(inputGifArrayNodes[num]);
+        }
+}
+
+
+btnSeeMore.addEventListener('click', seeMore);
+
+function seeMore () {
+    const container = document.getElementsByClassName('container-search')[0];
+    if(igif < 5) {
+        for(let num = 0; num < 12; num ++) {
+            if(num+12*igif < inputGifArrayNodes.length) {
+                container.append(inputGifArrayNodes[num+12*igif]);
+            }
+            else {
+                btnSeeMore.style.display = 'none';
+            }
+        }
+    }
+    igif++;
+}
+
+const arrayTrending = (resp) => {
+    /*
+    const container = document.querySelector('.trending-gall');
+    container.innerHTML = ""; */
+    resp.forEach(function(data){
+        const gifObject = {
+            imageUrl: 'url',
+            user: 'User',
+            title: 'Title',
+            imageid: 'id'
+        }
+        gifObject.imageUrl = data.images.original.url;
+        if(data.username == "") {
+            gifObject.user = 'GIPHY';
+        } else {
+            gifObject.user = data.username.toUpperCase();
+        }
+        gifObject.title = data.title.split(' GIF')[0];
+        gifObject.imageid = data.id;
+        gifsTrend.push(gifObject);
+    })
+    
+    moveCarrusel(gifsTrend);
+}
+
+//5. Creating Card Showing Small GIF Screen Gallery After Search
+
+const createCard = (param) => {
+    const div1 = document.createElement('div');
+    const div2 = document.createElement('div');
+    const div3 = document.createElement('div');
+    const div4 = document.createElement('div');
+    const div5 = document.createElement('div');
+    const button_1 = document.createElement('button');
+    const button_2 = document.createElement('button');
+    const button_3 = document.createElement('button');
+    
+    const img_1 = document.createElement('img');
+    const img_2 = document.createElement('img');
+    const img_3 = document.createElement('img');
+    const p_1 = document.createElement('p');
+    const h_1 = document.createElement('h3');
+    div1.appendChild(div2);
+    div1.appendChild(div3);
+    div3.appendChild(div4);
+    div3.appendChild(div5);
+    div4.appendChild(button_1);
+    div4.appendChild(button_2);
+    div4.appendChild(button_3);
+    div5.appendChild(p_1);
+    div5.appendChild(h_1);
+    button_1.appendChild(img_1);
+    button_2.appendChild(img_2);
+    button_3.appendChild(img_3);
+    
+    div1.classList.add('gif-card', 'gif-pic', 'card__screen');
+    div2.classList.add('second-gif');
+    div3.classList.add('hover-gif');
+    div4.classList.add('t-icons');
+    div5.classList.add('title-card');
+    button_1.classList.add('b-icon');
+    button_1.classList.add(param);
+    button_2.classList.add('b-icon');
+    button_3.classList.add('b-icon');
+    
+    button_1.getElementsByTagName('img')[0].src = "assets/icon-fav-hover.svg";
+    button_2.getElementsByTagName('img')[0].src = "assets/icon-download.svg";
+    button_3.getElementsByTagName('img')[0].src = "assets/icon-max.svg";
+    
+    return div1;
+}
+
+//6. Trending Section Gallery
+
+window.addEventListener('load', (event) => {
+    
+    searchTren(urlTrending);
+    
+    trendingSection.innerHTML = "";
+    
+});
+
+
+function createTrendCards () {
+    for(let i = 0; i < 3; i++) {
+        const cardTest = createCard('like-trend');
+        cardTest.style.backgroundImage = "url('" + gifsTrend[i].imageUrl + "')";
+        cardTest.getElementsByTagName('p')[0].innerText = gifsTrend[i].user.toUpperCase();
+        cardTest.getElementsByTagName('h3')[0].innerText = gifsTrend[i].title;
+        trendingSection.append(cardTest);
+    }
+}
+
+
+//7. INPUT CYCLE
+
+
+//.search-box-input
+//.lin-2
+//.active-title
+//.b-see-more
+//.search-again
+
+function hideMainbar () {
+    
+    trendingText.style.display = 'none';
     
 }
 
-document.querySelector(".butt-1").addEventListener('click', function(){
-    let bVal2 = document.querySelector(`.butt-1`).value;
-    searchBar2(bVal2);
-    searchGiphy(url, bVal2);
-    moveScreen();
-});
-
-document.querySelector(".butt-2").addEventListener('click', function(){
-    let bVal2 = document.querySelector(`.butt-2`).value;
-    searchBar2(bVal2);
-    searchGiphy(url, bVal2);
-    moveScreen();
-});
-
-document.querySelector(".butt-3").addEventListener('click', function(){
-    let bVal2 = document.querySelector(`.butt-3`).value;
-    searchBar2(bVal2);
-    searchGiphy(url, bVal2);
-    moveScreen();
-});
-
-
-document.querySelector(".butt-4").addEventListener('click', function(){
-    let bVal2 = document.querySelector(`.butt-4`).value;
-    searchBar2(bVal2);
-    searchGiphy(url, bVal2);
-    moveScreen();
-});
+function showBarSuggestions () {
+    
+    lineDiv.style.display = 'block';
+    titleGifs[0].style.display = 'block';
+    
+}
 
 
 
-const ddown = () => {
+//8. Input Suggestions Search
 
-    const dropDown = document.getElementById('themes');
-    console.log(dropDown);
-    dropDown.style.display = "inline-block";
+function addSuggestions (resp) {
+    
+    for(let i = 0; i < 4; i++) {
+        
+        btnText[i].textContent = resp[i].title;
+    }
+    
+}
 
-    dropDown.addEventListener('mouseout', function(){
-
+document.querySelectorAll('.btn').forEach(item => {
+    item.addEventListener('click', e => {
+        contProd++;
+        localStorage.setItem('contProd', contProd);
+        contador.innerText = " " + contProd;
+        //funcion que agrega los productos a un array
     });
+});
+
+
+// Button LIKE CARD
+
+// document.querySelectorAll('.gif-card')[50].style.backgroundImage;
+// str.substring(str.indexOf('"')+ 1 , str.lastIndexOf('"'));
+
+
+//localStorage.setItem('favoritosUrl'," ");
+
+// var names = [];
+// names[0] = prompt("New member name?");
+// localStorage.setItem("names", JSON.stringify(names));
+
+let cardArray = [];
+
+function getLike (item, class1) {
+    let buttonLike = item.querySelector(class1);
+    let str = item.style.backgroundImage;
+    let urlGifFav2 = str.substring(str.indexOf('"')+ 1, str.lastIndexOf('"'));
+    let urlGifFav = str.substring(str.indexOf('media/')+ 6, str.lastIndexOf('/giphy'));
+    
+    //USER and TITLe
+    let userName = item.querySelector('.title-card').getElementsByTagName('p')[0].innerHTML;
+    let titleGif = item.querySelector('.title-card').getElementsByTagName('h3')[0].innerHTML;
+    
+    let cardObject = {
+        imageUrl: urlGifFav,
+        user: userName,
+        title: titleGif
+    };
+    
+    if (localStorage.getItem('favoritosUrl') == null) {
+        localStorage.setItem('favoritosUrl'," ");
+        localStorage.setItem('favobject'," ");
+    }
+    
+    if(localStorage.getItem('favoritosUrl') === " " && localStorage.getItem('favobject') === " ") {
+        buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-active.svg';
+        favsArray.push(urlGifFav);
+        localStorage.setItem('favoritosUrl', JSON.stringify(favsArray));
+        cardArray.push(cardObject);
+        localStorage.setItem('favobject',JSON.stringify(cardArray));
+        
+    } 
+    else {
+        favsArray = JSON.parse(localStorage.getItem('favoritosUrl'));
+        cardArray = JSON.parse(localStorage.getItem('favobject'));
+        
+        if(favsArray.indexOf(urlGifFav) === -1) {
+            buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-active.svg';
+            favsArray.push(urlGifFav);
+            localStorage.setItem('favoritosUrl', JSON.stringify(favsArray));
+            cardArray.push(cardObject);
+            localStorage.setItem('favobject',JSON.stringify(cardArray));
+        } else {
+            let index = cardArray.findIndex(x => x.imageUrl === urlGifFav);
+            cardArray.splice(index,1);
+            buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-hover.svg';
+            favsArray.splice(favsArray.indexOf(urlGifFav), 1);
+            
+            localStorage.setItem('favoritosUrl', JSON.stringify(favsArray));
+            localStorage.setItem('favobject',JSON.stringify(cardArray));
+        }
+    }
 };
 
 
-//let timer = setInterval(setTime, 1000);
-let seconds = 0;
+function addLikeClass (item, class1) {
+    if(localStorage.getItem('favoritosUrl') != null) {
+        let buttonLike = item.querySelector(class1);
+        let str = item.style.backgroundImage;
+        let urlGifFav = str.substring(str.indexOf('"')+ 1, str.lastIndexOf('"'));
+        let urlGifFav2 = str.substring(str.indexOf('media/')+ 6, str.lastIndexOf('/giphy'));
+        let itemStorage = JSON.parse(localStorage.getItem('favoritosUrl'));
+        
+        for(let i = 0; i < itemStorage.length; i++ ){
+            
+            if(itemStorage[i] == urlGifFav2) {
+                buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-active.svg';
+                break;
+            } else {
+                buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-hover.svg';
+            }
+        }
+    }
+    
+}
 
-function setTime() {
-    seconds++;
-    let hour = Math.floor(seconds/3600)
-    let minute = Math.floor((seconds-hour*3600)/60);
-    secondsDigit = seconds - (hour*3600 + minute*60);
-    console.log("00:" + minute + ":" + secondsDigit);
+// let arrayFavoritos = [
+//     {imageUrl: "YmVNzDnboB0RQEpmLr", user: "GIPHY", title: "Mad Grumpy Cat"}, 
+//     {imageUrl: "qShKy3KNSkzVIxBSiI", user: "METS", title: "Napoleon Dynamite Dancing"},
+//     {imageUrl: "VtxmM6gtt9Li0", user: "MAUDIT", title: "Looking Bette Davis"}
+// ];
+
+// arrayFavoritos.forEach((item) => {
+//     if('VtxmM6gtt9Li0' == item.imageUrl) {
+//         console.log(item.user);
+//         console.log(item.title);
+//     }
+
+// })
+
+
+
+// SCREEN MAX GIFO
+
+function getScreenMax (index, array) {
+    
+    subDiv.remove();
+    globalDiv.innerHTML = screenMax;
+    let closeWindow = document.getElementsByClassName('button-icon')[0];
+    let likeBtn = document.getElementsByClassName('button-icon')[1];
+    let getGif = document.getElementsByClassName('button-icon')[2];
+    const previewGif = document.getElementsByClassName('b-gallery')[0];
+    const nextGif = document.getElementsByClassName('b-gallery')[1];
+    let divMAx = document.querySelector('.container-max');
+    let gifPic = document.querySelector('.gifo-image-max');
+    let urlGif;
+    
+    let numleft = index;
+    let numright = index;
+    let limit = array.length;
+    
+    addGifPic(index);
+    addLikeGifMax(divMAx);
+    
+    previewGif.addEventListener('click', () => {
+        if(numright != 0) {
+            numright = numright - 1;
+            addGifPic(numright);
+            addLikeGifMax(divMAx);
+            numleft = numright
+        } else {
+            numright = 0;
+            numright = numleft;
+        }
+        
+    })
+    
+    nextGif.addEventListener('click', () => {
+        if(numleft < limit - 1) {
+            numleft = numleft + 1;
+            addGifPic(numleft);
+            addLikeGifMax(divMAx);
+            numright = numleft
+        } else {
+            numleft = limit;
+            numleft = numright;
+        }
+        
+    })
+
+    likeBtn.addEventListener('click', () => {
+        getLikeGifMax();
+        
+    })
+
+    getGif.addEventListener('click', () => {
+    
+        let str2 = gifPic.style.backgroundImage;
+        let urlGifFav = str2.substring(str2.indexOf('media/')+ 6, str2.lastIndexOf('/giphy'));
+        window.open(`https://media.giphy.com/media/${urlGifFav}/giphy.gif`);
+    })
+    
+    closeWindow.addEventListener('click', () => {
+        globalDiv.innerHTML = " ";
+        globalDiv.appendChild(subDiv);
+        const container = document.querySelector('.trending-gall');
+        const container2 = document.querySelector('.container-search');
+        container.querySelectorAll('.gif-card').forEach(item => {
+            addLikeClass(item, '.like-trend');
+        })
+        container2.querySelectorAll('.gif-card').forEach(item => {
+            addLikeClass (item, '.like');
+        })
+
+        
+    })
+    
+    function addGifPic (index) {
+        urlGif = `https://media.giphy.com/media/${array[index].imageid}/giphy.gif`;
+        gifPic.style.backgroundImage = "url('"+urlGif+"')";
+        divMAx.getElementsByTagName('p')[0].innerHTML = array[index].user;
+        divMAx.getElementsByTagName('p')[1].innerHTML = array[index].title;
+    }
+    
+}
+
+function addLikeGifMax (item) {
+    if(localStorage.getItem('favoritosUrl') != null) {
+        let buttonLike = item.querySelectorAll('.button-icon');
+        let str = item.querySelector('.gifo-image-max').style.backgroundImage;
+        let urlGifFav2 = str.substring(str.indexOf('media/')+ 6, str.lastIndexOf('/giphy'));
+        let itemStorage = JSON.parse(localStorage.getItem('favoritosUrl'));
+        for(let i = 0; i < itemStorage.length; i++ ){
+            
+            if(itemStorage[i] == urlGifFav2) {
+                buttonLike[1].getElementsByTagName('img')[0].src = '../assets/icon-fav-active.svg';
+                break;
+            } else {
+                buttonLike[1].getElementsByTagName('img')[0].src = '../assets/icon-fav-hover.svg';
+            }
+        }
+    }
+}
+
+const screenMax = `
+<div class="close-2-button">
+<button class="button-icon b-icon-2 b-icon-3"><img src="assets/button-close.svg" alt="icon fav"></button>
+</div>
+<section class="gif-screen">
+<button class="b-gallery left"></button>
+<div class="gifo-image-max">
+
+</div>
+<button class="b-gallery right"></button>    
+</section>
+<section class="gif-icons-screen">
+<div class="container-icons">
+<div class="gif-icons-text">
+<p class="text-p1 size-s1">User</p>
+<p class="text-p1 size-s2">Título GIFO</p>
+</div>
+<div class="icons-gif">
+<button class="button-icon b-icon-2 like"><img src="assets/icon-fav-hover.svg" alt="icon fav"></button>
+<button class="button-icon b-icon-2"><img src="assets/icon-download.svg" alt="icon fav"></button>
+</div>
+</div>
+</section>`;
+
+function getLikeGifMax () {
+    const gifo = document.querySelector('.gifo-image-max');
+    let buttonLike = document.querySelector('.like');
+    let str = gifo.style.backgroundImage;
+    let urlGifFav = str.substring(str.indexOf('media/')+ 6, str.lastIndexOf('/giphy'));
+    
+    //USER and TITLe
+    let userName = document.getElementsByClassName('text-p1')[0].innerHTML;
+    let titleGif = document.getElementsByClassName('text-p1')[1].innerHTML;
+    
+    let cardObject = {
+        imageUrl: urlGifFav,
+        user: userName,
+        title: titleGif
+    };
+    
+    if (localStorage.getItem('favoritosUrl') == null) {
+        localStorage.setItem('favoritosUrl'," ");
+        localStorage.setItem('favobject'," ");
+    }
+    
+    if(localStorage.getItem('favoritosUrl') === " " && localStorage.getItem('favobject') === " ") {
+        buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-active.svg';
+        favsArray.push(urlGifFav);
+        localStorage.setItem('favoritosUrl', JSON.stringify(favsArray));
+        cardArray.push(cardObject);
+        localStorage.setItem('favobject',JSON.stringify(cardArray));
+        
+    } 
+    else {
+        favsArray = JSON.parse(localStorage.getItem('favoritosUrl'));
+        cardArray = JSON.parse(localStorage.getItem('favobject'));
+        
+        if(favsArray.indexOf(urlGifFav) === -1) {
+            buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-active.svg';
+            favsArray.push(urlGifFav);
+            localStorage.setItem('favoritosUrl', JSON.stringify(favsArray));
+            cardArray.push(cardObject);
+            localStorage.setItem('favobject',JSON.stringify(cardArray));
+        } else {
+            buttonLike.getElementsByTagName('img')[0].src = '../assets/icon-fav-hover.svg';
+            favsArray.splice(favsArray.indexOf(urlGifFav), 1);
+            
+            let index = cardArray.findIndex(x => x.imageUrl === urlGifFav);
+            cardArray.splice(cardArray.indexOf(index),1);
+            
+            localStorage.setItem('favoritosUrl', JSON.stringify(favsArray));
+            localStorage.setItem('favobject',JSON.stringify(cardArray));
+        }
+    }
+}
+
+// Trending NEXT and PREVIEW
+
+const btnsCarrusel = document.querySelectorAll('.b-gallery');
+
+function moveCarrusel (array){
+    let left = 2;
+    let right = 0;
+    let limit = array.length;
+    console.log(limit);
+    
+    btnsCarrusel[0].addEventListener('click', ()=> {
+        if(right != 0) {
+            right = right - 1;
+            
+            newGif(0, right);
+            newGif(1, right+1);
+            newGif(2, right+2);
+            
+            left = right + 2;
+            
+        } else {
+            right = 0;
+            left = right + 2;
+        }
+    })
+    
+    btnsCarrusel[1].addEventListener('click', ()=> {
+        
+        if(left < limit - 1) {
+            
+            left = left + 1;
+            
+            newGif(0, left-2);
+            newGif(1, left-1);
+            newGif(2, left);
+            
+            right = left - 2
+            
+        } else {
+            left = limit;
+            right = left-2;
+        }
+    })
+    
+    function newGif(pos, num) {
+        trendingSection.getElementsByClassName('gif-card')[pos].style.backgroundImage = "url('" + array[num].imageUrl + "')";
+        trendingSection.getElementsByClassName('gif-card')[pos].getElementsByTagName('p')[0].innerText = array[num].user.toUpperCase();
+        trendingSection.getElementsByClassName('gif-card')[pos].getElementsByTagName('h3')[0].innerText = array[num].title;
+        addLikeClass(trendingSection.getElementsByClassName('gif-card')[pos], '.like-trend')
+    }
 }
 

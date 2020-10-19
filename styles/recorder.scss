@@ -1,0 +1,360 @@
+@import 'variables';
+
+body {
+
+    font-family: 'Open Sans', sans-serif;
+}
+
+main {
+    background-color: var(--white);
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    
+}
+
+.video-recorder {
+    width: 800px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-video {
+    width: 688px;
+    height: 390px;
+    border: 1px solid var(--border);
+    margin-top: 4px;
+}
+
+.chapter {
+    width: 688px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+    position: relative;
+
+    p {
+        display: none;
+        font-size: 15px;
+        font-weight: bold;
+        color: var(--border);
+        letter-spacing: 0;
+        text-align: center;
+        line-height: 22px;
+        order: -1;
+        position: absolute;
+        right: 0;
+        
+    }
+}
+
+//1. Border Boxes
+
+.box-border {
+    width: 27px;
+    height: 25px;
+    
+}
+
+.top-b {
+    border-top: 1px solid $green;
+}
+
+.left-b {
+    border-left: 1px solid $green;
+}
+
+.right-b {
+    border-right: 1px solid $green;
+}
+
+.bottom-b {
+    border-bottom: 1px solid $green;
+}
+
+.sm-box-1 {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.sm-bottom {
+    position: relative;
+    top: -65px;
+}
+
+//1.1 Title First Box Video CREAR GIFOS
+
+.main-video {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 480px;
+    height: 320px;
+    position: relative;
+    z-index: 2;
+    top: -30px;
+    left: 104px;
+
+    .main-title-1 {
+        
+        font-size: 28px;
+        color: var(--border);
+        font-weight: 700;
+        text-align: center;
+        line-height: 38px;
+    }
+
+    .main-text-1 {
+        font-size: 16px;
+        color: var(--black);
+        text-align: center;
+        line-height: 29px;
+
+    }
+
+    span {
+        color: $green;
+    }
+}
+
+//1.2 Images CAMERA and MOVIE
+
+.camera-image {
+    position: relative;
+    top: -80px;
+    left: 60px;
+
+}
+
+.camera-light {
+    position: relative;
+    left: -5px;
+    top: -14px;
+}
+
+.camera-image-2 {
+    position: relative;
+    top: 150px;
+    left: 10px;
+
+}
+
+
+//1.3 Video Chapter ICONS and Buttons
+
+.video-chapter {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    hr {
+        width: 796px;
+        height: 6px;
+        background: var(--border);
+        border-radius: 5px;
+        border: none;
+        margin-top: 15px;
+    }
+
+    .chapter-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        margin: 0 16px;
+
+        h2{
+            font-size: 18px;
+            color: var(--border);
+            font-weight: 600;
+        }
+    }
+
+    .selected-icon {
+        background-color: var(--border);
+        h2 {
+            color: var(--white);
+        }
+    }
+
+    .start-video {
+        margin-top: 20px;
+        width: 127px;
+        
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 25px;
+        border-radius: 25px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--border);
+        letter-spacing: 0;
+        text-align: center;
+        padding: 18px 10px;
+    }
+
+    .chapter-repeat {
+        display: none;
+        background: $white;
+        border: none;
+        border-bottom: 2px solid $green;
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--border);
+        letter-spacing: 0;
+        text-align: center;
+        order: -1;
+        position: absolute;
+        right: 0;
+    }
+
+}
+
+
+//1.4 Button Create Gifo on the corner
+
+.gif-create-2 {
+    img {
+        display: none;
+    }
+    background-color: $b-active;
+    background-image: url("../assets/button-crear-gifo_white.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+.gif-create-2:hover {
+    img {
+        display: none;
+    }
+    background-color: $b-active;
+    background-image: url("../assets/button-crear-gifo_white.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+// VIDEO TAG
+
+#record {
+    width: 100%;
+    height: 100%;
+}
+
+
+//Upload GIFO
+
+.upload {
+    width: 480px;
+    height: 320px;
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 16px;
+        font-weight: bold;
+        color: $white;
+        text-align: center;
+    }
+}
+
+.back-color {
+    
+    width: 100%;
+    height: 100%;
+    background-color: var(--border);
+    position: absolute;
+    z-index: 2;
+    opacity: 0.6;
+}
+
+.container-button {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.container-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    position: absolute;
+}
+
+.up-container {
+    width: 22px;
+    height: 22px;
+    background-repeat: no-repeat;
+    margin-bottom: 10px;
+}
+
+.loading {
+    background-image: url("../assets/loader.svg");
+    
+}
+
+.upload-ok {
+    background-image: url("../assets/check.svg");
+}
+
+.u-icon {
+    //display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    order: -1;
+    border: none;
+    width: 32px;
+    height: 32px;
+    margin: 10px 10px 0px 0;
+    background: $white;
+    border-radius: 6px;
+    opacity: 0.7;
+    z-index: 2;
+}
+
+.u-icon:hover {
+    opacity: 1;
+}
+
+.left-icon {
+    right: 42px;
+}
+
+.step-one {
+    display: none;
+}
+
+.step-two {
+    display: none;
+}
+
+footer {
+    padding-top: 47px;
+    transition: background 500ms ease-in-out, color 1000ms ease-in-out;
+}
